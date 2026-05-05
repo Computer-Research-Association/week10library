@@ -12,3 +12,4 @@
 
 echo ".idea/" >> .gitignore
 echo "*.iml" >> .gitignore
+
