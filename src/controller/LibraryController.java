@@ -23,10 +23,11 @@ public class LibraryController {
 
             switch (choice) {
                 case 1 -> handleAdd();
-                case 2 -> handleUpdate();
-                case 3 -> handleLoan();
-                case 4 -> handleReturn();
-                case 5 -> handleDelete();
+                case 2 -> handlePrintAll();
+                case 3 -> handleUpdate();
+                case 4 -> handleLoan();
+                case 5 -> handleReturn();
+                case 6 -> handleDelete();
                 case 0 -> {
                     view.showMessage("프로그램을 종료합니다.");
                     return;
@@ -72,6 +73,12 @@ public class LibraryController {
 
         model.updateBook(title, newAuthor, newCategory, newPrice, newYear);
         view.showMessage("도서 정보가 수정되었습니다.");
+    }
+
+    //도서 목록 출력
+    private void handlePrintAll() {
+        view.showMessage("=== 도서 목록 ===");
+        model.printAll();
     }
 
     // 도서 대출
