@@ -51,11 +51,15 @@ public class LibraryController {
         view.showMessage("출판연도: ");
         int year = Integer.parseInt(scanner.nextLine().trim());
 
-        Book book = new Book(title, author, category, price, year);
-        model.addBook(book);
+        model.addBook(new Book(title, author, category, price, year));
         view.showMessage("도서가 추가되었습니다.");
     }
-    
+
+    // 도서 목록 출력 - model에서 데이터 받아서 view에 전달
+    private void handlePrintAll() {
+        view.showMessage("=== 도서 목록 ===");
+        view.showBooks(model.getBooks(), model.getCount());
+    }
 
     // 도서 수정
     private void handleUpdate() {
@@ -71,30 +75,32 @@ public class LibraryController {
         view.showMessage("새 출판연도: ");
         int newYear = Integer.parseInt(scanner.nextLine().trim());
 
-        model.updateBook(title, newAuthor, newCategory, newPrice, newYear);
-        view.showMessage("도서 정보가 수정되었습니다.");
+        boolean result = model.updateBook(title, newAuthor, newCategory, newPrice, newYear);
+        view.showMessage(result ? "도서 정보가 수정되었습니다." : "해당 도서를 찾을 수 없습니다.");
     }
 
-    //도서 목록 출력
-    private void handlePrintAll() {
-        view.showMessage("=== 도서 목록 ===");
-        model.printAll();
-    }
-
-    // 도서 대출
+    // 도서 대출 - model 결과값으로 view 메시지 결정
     private void handleLoan() {
         view.showMessage("=== 도서 대출 ===");
         view.showMessage("대출할 도서 제목: ");
         String title = scanner.nextLine();
-        model.loanBook(title);
+
+        int result = model.loanBook(title);
+        if (result == 0) view.showMessage("해당 도서를 찾을 수 없습니다.");
+        else if (result == 1) view.showMessage("이미 대출중인 도서입니다.");
+        else view.showMessage("대출되었습니다: " + title);
     }
 
-    // 도서 반납
+    // 도서 반납 - model 결과값으로 view 메시지 결정
     private void handleReturn() {
         view.showMessage("=== 도서 반납 ===");
         view.showMessage("반납할 도서 제목: ");
         String title = scanner.nextLine();
-        model.returnBook(title);
+
+        int result = model.returnBook(title);
+        if (result == 0) view.showMessage("해당 도서를 찾을 수 없습니다.");
+        else if (result == 1) view.showMessage("대출중이 아닌 도서입니다.");
+        else view.showMessage("반납되었습니다: " + title);
     }
 
     // 도서 삭제
@@ -102,7 +108,8 @@ public class LibraryController {
         view.showMessage("=== 도서 삭제 ===");
         view.showMessage("삭제할 도서 제목: ");
         String title = scanner.nextLine();
-        model.deleteBook(title);
-        view.showMessage("도서가 삭제되었습니다.");
+
+        boolean result = model.deleteBook(title);
+        view.showMessage(result ? "도서가 삭제되었습니다." : "해당 도서를 찾을 수 없습니다.");
     }
 }
