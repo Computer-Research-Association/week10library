@@ -2,7 +2,6 @@ package view;
 
 public class LibraryView {
 
-    // 메뉴 출력
     public void showMenu() {
         System.out.println("============================");
         System.out.println("       도서 관리 시스템       ");
@@ -18,7 +17,6 @@ public class LibraryView {
         System.out.print("선택: ");
     }
 
-    // 메시지 출력
     public void showMessage(String msg) {
         System.out.println(msg);
     }
