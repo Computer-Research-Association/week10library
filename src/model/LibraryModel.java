@@ -30,6 +30,7 @@ public class LibraryModel {
         }
     }
 
+
     // 도서 추가
     public void addBook(Book book) {
         String sql = "INSERT INTO books (title, author, category, price, year) VALUES (?, ?, ?, ?, ?)";
